@@ -1,0 +1,18 @@
+{
+  "name": "gamepad",
+  "servePort": 8000,
+  "partitions": {
+    "lib": {
+      "path": "lib",
+      "target": "ReplicatedStorage.Modules.Gamepad"
+    },
+    "example": {
+      "path": "example",
+      "target": "StarterPlayer.StarterPlayerScripts.GamepadExample"
+    },
+    "modules/roact": {
+      "path": "../modules/roact/lib",
+      "target": "ReplicatedStorage.Modules.Roact"
+    }
+  }
+}

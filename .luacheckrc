@@ -7,9 +7,10 @@ stds.roblox = {
 		"script",
 
 		-- Extra functions
-		"typeof", "wait", "tick",
+		"typeof", "wait", "tick", "warn",
 
 		-- Types
+		"Instance",
 		"Enum",
 		"Vector2", "Color3", "UDim2",
 	}
