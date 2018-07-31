@@ -28,14 +28,13 @@ local bottomButtons = {
 	},
 	{
 		text = "Boo",
-	}
+	},
 }
 
 local TabNavigation = Roact.Component:extend("TabNavigation")
 
 function TabNavigation:init()
-	self.topGroup = Gamepad.createSelectionGroup()
-	self.bottomGroup = Gamepad.createSelectionGroup()
+	self.group = Gamepad.createSelectionItem(self)
 end
 
 function TabNavigation:render()
@@ -48,10 +47,10 @@ function TabNavigation:render()
 			BackgroundColor3 = Color3.new(0.1, 0.1, 0.1),
 		}, {
 			Buttons = e(ButtonList, {
+				selectionGroupId = "Top",
 				buttons = topButtons,
-				selectionGroup = self.topGroup,
-				selectionUp = self.bottomGroup.target,
-				selectionDown = self.bottomGroup.target,
+				selectionUp = self.group:getRedirectObject("Bottom"),
+				selectionDown = self.group:getRedirectObject("Bottom"),
 			}),
 		}),
 		Body = e("Frame", {
@@ -60,10 +59,10 @@ function TabNavigation:render()
 			BackgroundColor3 = Color3.new(0.3, 0.3, 0.3),
 		}, {
 			Buttons = e(ButtonList, {
+				selectionGroupId = "Bottom",
 				buttons = bottomButtons,
-				selectionGroup = self.bottomGroup,
-				selectionUp = self.topGroup.target,
-				selectionDown = self.topGroup.target,
+				selectionUp = self.group:getRedirectObject("Top"),
+				selectionDown = self.group:getRedirectObject("Top"),
 			}),
 		})
 	})

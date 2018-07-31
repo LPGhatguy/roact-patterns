@@ -1,4 +1,4 @@
 return {
-	createSelectionGroup = require(script.createSelectionGroup),
 	redirectToRef = require(script.redirectToRef),
+	createSelectionItem = require(script.createSelectionItem)
 }

@@ -7,7 +7,7 @@ local Gamepad = require(Modules.Gamepad)
 
 local SelectableButton = require(script.Parent.SelectableButton)
 
-local function createWoof()
+local function createRefCache()
 	local self = {}
 
 	setmetatable(self, {
@@ -25,11 +25,10 @@ end
 local ButtonList = Roact.Component:extend("ButtonList")
 
 function ButtonList:init()
-	self.refs = createWoof()
-	self.rootRef = Roact.createRef()
+	self.buttonRefs = createRefCache()
 
-	self.props.selectionGroup.selectionRoot = self.rootRef
-	self.props.selectionGroup.defaultSelection = self.refs[1]
+	self.group = Gamepad.createSelectionItem(self, self.props.selectionGroupId)
+	self.group:setDefaultSelection(1)
 end
 
 function ButtonList:render()
@@ -49,14 +48,18 @@ function ButtonList:render()
 		local nextSibling = (index % #buttons) + 1
 
 		children[index] = Roact.createElement(SelectableButton, {
+			selectionId = index,
 			style = {
 				Text = button.text,
 				LayoutOrder = index,
 				NextSelectionUp = selectionUp,
 				NextSelectionDown = selectionDown,
-				NextSelectionLeft = Gamepad.redirectToRef(self.refs[previousSibling]),
-				NextSelectionRight = Gamepad.redirectToRef(self.refs[nextSibling]),
-				[Roact.Ref] = self.refs[index],
+				NextSelectionLeft = Gamepad.redirectToRef(self.buttonRefs[previousSibling]),
+				NextSelectionRight = Gamepad.redirectToRef(self.buttonRefs[nextSibling]),
+				[Roact.Ref] = self.buttonRefs[index],
+			},
+			selectedStyle = {
+				BackgroundColor3 = Color3.new(1, 0, 0),
 			},
 		})
 	end
@@ -64,7 +67,6 @@ function ButtonList:render()
 	return Roact.createElement("Frame", {
 		Size = UDim2.new(1, 0, 1, 0),
 		BackgroundTransparency = 1,
-		[Roact.Ref] = self.rootRef,
 	}, children)
 end
 

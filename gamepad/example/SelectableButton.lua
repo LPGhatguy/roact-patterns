@@ -3,12 +3,19 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local Modules = ReplicatedStorage.Modules
 
 local Roact = require(Modules.Roact)
+local Gamepad = require(Modules.Gamepad)
 
 local assign = require(script.Parent.assign)
 
 local SelectableButton = Roact.Component:extend("SelectableButton")
 
 function SelectableButton:init()
+	-- gross
+	self.ref = self.props.style[Roact.Ref] or Roact.createRef()
+
+	local group = Gamepad.createSelectionItem(self, self.props.selectionId)
+	group:setDefaultSelection(self.ref)
+
 	self.state = {
 		selected = false,
 	}
@@ -25,6 +32,8 @@ function SelectableButton:render()
 		TextColor3 = Color3.new(1, 1, 1),
 		Font = Enum.Font.SourceSans,
 		TextSize = 30,
+
+		[Roact.Ref] = self.ref,
 
 		[Roact.Event.SelectionGained] = function()
 			self:setState({
