@@ -10,7 +10,9 @@ local assign = require(script.Parent.assign)
 local SelectableButton = Roact.Component:extend("SelectableButton")
 
 function SelectableButton:init()
-	-- gross
+	-- This is kind of a gross workaround for a simple problem: With
+	-- object-style refs, sharing a ref with your parent is not as easy as it
+	-- was with function refs. Maybe Roact should provide an API for this?
 	self.ref = self.props.style[Roact.Ref] or Roact.createRef()
 
 	local group = Gamepad.createSelectionItem(self, self.props.selectionId)

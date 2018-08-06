@@ -7,6 +7,8 @@ local Gamepad = require(Modules.Gamepad)
 
 local SelectableButton = require(script.Parent.SelectableButton)
 
+-- This is a handy trick to allow us to reference refs before we've actually
+-- rendered anything, and without duplicating rendering logic!
 local function createRefCache()
 	local self = {}
 
@@ -44,6 +46,7 @@ function ButtonList:render()
 	})
 
 	for index, button in ipairs(buttons) do
+		-- 1-based indexing makes math gross
 		local previousSibling = ((index - 2) % #buttons) + 1
 		local nextSibling = (index % #buttons) + 1
 
@@ -54,8 +57,15 @@ function ButtonList:render()
 				LayoutOrder = index,
 				NextSelectionUp = selectionUp,
 				NextSelectionDown = selectionDown,
+
+				-- Once Roact has support for unidirectional bindings for refs,
+				-- we can change these lines to:
+				-- NextSelectionLeft = self.buttonRefs[previousSibling],
+				-- NextSelectionRight = self.buttonRefs[nextSibling],
+
 				NextSelectionLeft = Gamepad.redirectToRef(self.buttonRefs[previousSibling]),
 				NextSelectionRight = Gamepad.redirectToRef(self.buttonRefs[nextSibling]),
+
 				[Roact.Ref] = self.buttonRefs[index],
 			},
 			selectedStyle = {

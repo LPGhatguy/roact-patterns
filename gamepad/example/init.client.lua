@@ -38,6 +38,12 @@ function TabNavigation:init()
 end
 
 function TabNavigation:render()
+	-- Gotcha: selectionGroupId passed to ButtonList has an implicit connection
+	-- to `self.group` via context. If a component is created by TabNavigation
+	-- that ALSO specifies a selection item, however, the IDs will be assigned
+	-- to that object instead, which is confusing!
+	--
+	-- This is similar to the issues that React used to have with string refs.
 	return e("Frame", {
 		Size = UDim2.new(1, 0, 1, 0),
 		BackgroundColor3 = Color3.new(0.2, 0.2, 0.2),
