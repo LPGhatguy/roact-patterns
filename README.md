@@ -2,7 +2,9 @@
 This is a repository containing a set of features that people commonly want to implement with Roact, and the way that I'd build them.
 
 ## Pattern Overview
-* `theming` - Dynamic theming based on the *context* feature
+* [`theming`](theming/README.md) - Dynamic theming based on Roact's *context* feature
+* [`gamepad`](gamepad/README.md) - Exploring gamepad development in Roact
+	* This example is a prototype and needs a new Roact feature to be production-ready
 
 ## Running Projects
 Make sure that:
@@ -13,10 +15,12 @@ Make sure that:
 * You have Rojo 0.4.10 or newer installed, used to sync examples into Roblox Studio.
 
 1. Run `rojo serve` in one of the pattern folders, like `theming`
-2. Open a new Roblox Studio place, enable HTTP, and sync in
-3. Run the game
+2. Open a new Roblox Studio place
+3. Enable HTTP in Game Settings
+4. Press 'Sync In' in the Rojo toolbar
+5. Run the game
 
 ## License
-This project is available under the CC0 1.0 Universal license. That means you can do pretty much whatever you want with everything here!
+This project is available under the CC0 1.0 Universal license.
 
 Details are in [LICENSE](LICENSE).
